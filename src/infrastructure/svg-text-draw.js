@@ -4,8 +4,8 @@
  * @param {string} str
  * @returns {void}
  */
-export function svgTextDraw(textEl, verticalMiddle, str) {
-	const strData = svgStrToTspan(
+export function svgTextDraw(textEl, verticalMiddle, str) { 
+	const strData = svgStrToTspan( //generates the <tspan element>
 		(str || ''),
 		textEl.x?.baseVal[0]?.value ?? 0);
 
@@ -14,6 +14,9 @@ export function svgTextDraw(textEl, verticalMiddle, str) {
 	textEl.y.baseVal[0].newValueSpecifiedUnits(
 		textEl.y.baseVal[0].SVG_LENGTHTYPE_EMS, // em
 		strData.c > 0 ? verticalMiddle - (strData.c) / 2 : verticalMiddle);
+		//IG this sets the basevalue of svg file based on how many files there are?
+		//looks like this piece of code recenters the thing, that's my best guess
+		
 }
 
 /**
@@ -27,7 +30,7 @@ function svgStrToTspan(str, x) {
 	return {
 		s: str.split('\n')
 			.map((t, i) => {
-				c = i;
+				c = i; //wth is this magic variable, I think this is for everyline but how does this work with the alternative arg in the map?
 				return `<tspan x="${x}" dy="${i === 0 ? 0.41 : 1}em" ${t.length === 0 ? 'visibility="hidden"' : ''}>${t.length === 0 ? '.' : escapeHtml(t).replaceAll(' ', '&nbsp;')}</tspan>`;
 			}).join(''),
 		c
